@@ -111,6 +111,7 @@ export default {
     logout () {
       this.$store.commit('auth/setUser', null)
       this.$store.commit('auth/setToken', null)
+      this.$router.push({ name: 'index' })
     }
   },
   mounted () {

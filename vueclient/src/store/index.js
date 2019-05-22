@@ -4,24 +4,17 @@ import Vuex from 'vuex'
 import book from './book'
 import auth from './auth'
 
+const debug = process.env.NODE_ENV !== 'production'
+
 Vue.use(Vuex)
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation
- */
+export default new Vuex.Store({
+  modules: {
+    book,
+    auth
+  },
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      book,
-      auth
-    },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  })
-
-  return Store
-}
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: debug
+})

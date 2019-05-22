@@ -1,21 +1,29 @@
 import Login from 'pages/Login.vue'
 import Register from 'pages/Register.vue'
+import Index from 'pages/Index.vue'
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MyLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      {
+        path: '',
+        name: 'index',
+        component: Index,
+        meta: { auth: false }
+      },
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: { auth: false }
       },
       {
         path: 'register',
         name: 'register',
-        component: Register
+        component: Register,
+        meta: { auth: true }
       }
     ]
   }
