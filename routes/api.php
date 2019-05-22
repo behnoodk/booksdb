@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('/author/{author}', 'AuthorController@update');
     Route::delete('/author', 'AuthorController@destroy');
 
+    Route::get('/user', function() {
+        return response()->json(request()->user());
+    });
+
 });
 
 

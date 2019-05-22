@@ -5,7 +5,8 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'axios'
+      'axios',
+      'vuelidate'
     ],
 
     css: [
@@ -27,17 +28,27 @@ module.exports = function (ctx) {
       components: [
         'QLayout',
         'QHeader',
+        'QFooter',
         'QDrawer',
+        'QScrollArea',
         'QPageContainer',
         'QPage',
         'QToolbar',
         'QToolbarTitle',
         'QBtn',
         'QIcon',
+        'QAvatar',
         'QList',
         'QItem',
         'QItemSection',
-        'QItemLabel'
+        'QItemLabel',
+        'QField',
+        'QInput',
+        'QCard',
+        'QCardSection',
+        'QCardActions',
+        'QSeparator',
+        'QTooltip'
       ],
 
       directives: [
@@ -78,10 +89,10 @@ module.exports = function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '/api': {
-          target: 'http://localhost:8000'
-          // pathRewrite: {
-          //   '^/api/': '/api/'
-          // }
+          target: 'http://localhost:8000',
+          pathRewrite: {
+            '^/api/': '/'
+          }
         }
       }
     },

@@ -9,7 +9,7 @@
     </div>
     <div class="row justify-center q-pt-lg">
       <div class="col-auto text-h6">
-        Login to Books Database
+        Register
       </div>
     </div>
     <div class="row justify-center">
@@ -21,12 +21,23 @@
           >
             <q-card-section>
               <q-input
+                ref="name"
+                v-model.trim="form.name"
+                hint="Name"
+                :error="$v.form.name.$error"
+                error-message="Please enter your name"
+                autofocus
+              >
+                <template v-slot:prepend>
+                  <q-icon name="person" />
+                </template>
+              </q-input>
+              <q-input
                 ref="email"
                 v-model.trim="form.email"
                 hint="Email"
                 :error="$v.form.email.$error"
                 error-message="Please enter a valid email"
-                autofocus
               >
                 <template v-slot:prepend>
                   <q-icon name="mail" />
@@ -47,10 +58,10 @@
               </q-input>
               <transition enter-active-class="animated fadeIn">
                 <div
-                  v-if="invalidCreds === true"
+                  v-if="registerSuccess === true"
                   class="note note--danger text-small"
                 >
-                  Invalid credentials!
+                  Registration completed! You can login now!
                 </div>
               </transition>
             </q-card-section>
@@ -77,8 +88,9 @@ export default {
   data () {
     return {
       loading: false,
-      invalidCreds: false,
+      registerSuccess: false,
       form: {
+        name: '',
         email: '',
         password: ''
       }
@@ -86,6 +98,9 @@ export default {
   },
   validations: {
     form: {
+      name: {
+        required
+      },
       email: {
         required,
         email
@@ -97,32 +112,26 @@ export default {
   },
   methods: {
     async submit () {
-      this.invalidCreds = false
+      this.registerSuccess = false
       this.$v.$touch()
       if (this.$v.$invalid) return
 
       this.loading = true
 
       const payload = {
-        'grant_type': 'password',
-        'client_id': '3',
-        'client_secret': 'J1RaytPpPd421gXgf7DbUgJyOCeCsnIigLw7ui9q',
-        'username': this.form.email,
-        'password': this.form.password,
-        'scope': '*'
+        'name': this.form.name,
+        'email': this.form.email,
+        'password': this.form.password
       }
 
-      const r = await http.post('/api/oauth/token', payload)
-      if (r.status === 200) {
-        const token = r.data.access_token
-        http.defaults.headers.common['Authorization'] = 'Bearer ' + token
-        const userInfo = await http.get('/api/api/user')
-        this.$store.commit('auth/setUser', userInfo.data.name)
-        this.$store.commit('auth/setToken', token)
-      } else {
-        this.invalidCreds = true
-      }
+      const r = await http.post('/api/api/register', payload)
       this.loading = false
+      if (r.status === 200) {
+        this.registerSuccess = true
+        // this.$store.commit('auth/setToken', r.data.access_token)
+      } else {
+        // this.invalidCreds = true
+      }
     }
   }
 }

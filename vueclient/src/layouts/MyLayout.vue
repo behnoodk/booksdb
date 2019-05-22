@@ -16,7 +16,14 @@
           Books Database
         </q-toolbar-title>
 
-        <div>Made with Laravel/Vue</div>
+        <q-btn v-if="!isLoggedIn" flat label="Login" :to="{name: 'login'}" />
+        <q-btn v-if="!isLoggedIn" flat label="Register" :to="{name: 'register'}" />
+        <div v-if="isLoggedIn">
+          {{userName}}
+        </div>
+        <q-btn v-if="isLoggedIn" flat @click="logout" icon="exit_to_app" >
+          <q-tooltip>Logout</q-tooltip>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -91,8 +98,26 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
+  computed: {
+    isLoggedIn () {
+      return this.$store.state.auth.token !== null
+    },
+    userName () {
+      return this.$store.state.auth.user
+    }
+  },
   methods: {
-    openURL
+    openURL,
+    logout () {
+      this.$store.commit('auth/setUser', null)
+      this.$store.commit('auth/setToken', null)
+    }
+  },
+  mounted () {
+    const user = localStorage.getItem('user')
+    const token = localStorage.getItem('token')
+    this.$store.commit('auth/setUser', user)
+    this.$store.commit('auth/setToken', token)
   }
 }
 </script>

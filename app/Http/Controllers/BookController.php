@@ -14,7 +14,15 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $book = Book::create($request);
+        $book = new Book([
+            'title' => $request->get('title'),
+            'isbn' => $request->get('isbn'),
+            'author_id' => $request->get('author_id'),
+            'cover' => $request->get('cover'),
+            'year' => $request->get('year'),
+            'description' => $request->get('description'),
+        ]);
+        $book->save();
 
         return response()->json([
                 'status' => (bool) $book,
