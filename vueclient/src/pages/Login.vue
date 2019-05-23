@@ -23,7 +23,7 @@
               <q-input
                 ref="email"
                 v-model.trim="form.email"
-                hint="Email"
+                label="Email"
                 :error="$v.form.email.$error"
                 error-message="Please enter a valid email"
                 autofocus
@@ -35,7 +35,7 @@
               <q-input
                 ref="password"
                 v-model="form.password"
-                hint="Password"
+                label="Password"
                 :error="$v.form.password.$error"
                 error-message="Please enter your password"
                 type="password"
@@ -119,6 +119,14 @@ export default {
         const userInfo = await http.get('/api/api/user')
         this.$store.commit('auth/setUser', userInfo.data.name)
         this.$store.commit('auth/setToken', token)
+        this.$q.notify({
+          message: `Logged in as ${userInfo.data.name}`,
+          icon: 'done',
+          position: 'top',
+          classes: 'app-message-positive',
+          timeout: 2000
+        })
+        this.$router.push({ name: 'index' })
       } else {
         this.invalidCreds = true
       }

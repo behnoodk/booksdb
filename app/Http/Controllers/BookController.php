@@ -42,7 +42,14 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        $status = $book->update($request);
+        $status = $book->update([
+            'title' => $request->get('title'),
+            'isbn' => $request->get('isbn'),
+            'author_id' => $request->get('author_id'),
+            'cover' => $request->get('cover'),
+            'year' => $request->get('year'),
+            'description' => $request->get('description'),
+        ]);
 
         return response()->json([
                 'status' => $status,

@@ -32,7 +32,9 @@ class AuthorController extends Controller
 
     public function update(Request $request, Author $author)
     {
-        $status = $author->update($request);
+        $status = $author->update([
+            'name' => $request->get('name')
+        ]);
 
         return response()->json([
                 'status' => $status,

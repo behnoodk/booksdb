@@ -23,7 +23,7 @@
               <q-input
                 ref="name"
                 v-model.trim="form.name"
-                hint="Name"
+                label="Name"
                 :error="$v.form.name.$error"
                 error-message="Please enter your name"
                 autofocus
@@ -35,7 +35,7 @@
               <q-input
                 ref="email"
                 v-model.trim="form.email"
-                hint="Email"
+                label="Email"
                 :error="$v.form.email.$error"
                 error-message="Please enter a valid email"
               >
@@ -46,7 +46,7 @@
               <q-input
                 ref="password"
                 v-model="form.password"
-                hint="Password"
+                label="Password"
                 :error="$v.form.password.$error"
                 error-message="Please enter your password"
                 type="password"
@@ -59,7 +59,7 @@
               <transition enter-active-class="animated fadeIn">
                 <div
                   v-if="registerSuccess === true"
-                  class="note note--danger text-small"
+                  class="note note--success text-small"
                 >
                   Registration completed! You can login now!
                 </div>

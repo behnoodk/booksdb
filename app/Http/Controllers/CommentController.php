@@ -14,7 +14,12 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-        $comment = Comment::create($request);
+        $comment = new Comment([
+            'book_id' => $request->get('book_id'),
+            'name' => $request->get('name'),
+            'comment' => $request->get('comment'),
+        ]);
+        $comment->save();
 
         return response()->json([
                 'status' => (bool) $comment,
