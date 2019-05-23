@@ -74,7 +74,7 @@
             class="col-auto"
             v-if="isLoggedIn"
           >
-          <q-btn
+            <q-btn
               flat
               round
               icon="delete"
@@ -148,8 +148,15 @@ export default {
     }
   },
   methods: {
-    deleteBook (id) {
-      this.$store.dispatch('book/destroy', { id })
+    async deleteBook (id) {
+      await this.$store.dispatch('book/destroy', { id })
+      this.$q.notify({
+        message: 'Book deleted successfully!',
+        icon: 'done',
+        position: 'top',
+        classes: 'app-message-positive',
+        timeout: 2000
+      })
     }
   },
   mounted () {
