@@ -72,7 +72,7 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators'
 import http from '../api/http'
-
+const isDev = process.env.NODE_ENV === 'development'
 export default {
   data () {
     return {
@@ -103,10 +103,17 @@ export default {
 
       this.loading = true
 
+      let clientId = '3'
+      let clientSecret = 'J1RaytPpPd421gXgf7DbUgJyOCeCsnIigLw7ui9q'
+      if (!isDev) {
+        clientId = '2'
+        clientSecret = 'aNhMKFT9B2HGRZYUntCebvK9ZIlHIDwTQjpmAOrk'
+      }
+
       const payload = {
         'grant_type': 'password',
-        'client_id': '3',
-        'client_secret': 'J1RaytPpPd421gXgf7DbUgJyOCeCsnIigLw7ui9q',
+        client_id: clientId,
+        client_secret: clientSecret,
         'username': this.form.email,
         'password': this.form.password,
         'scope': '*'
