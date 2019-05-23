@@ -74,11 +74,20 @@
             class="col-auto"
             v-if="isLoggedIn"
           >
+          <q-btn
+              flat
+              round
+              icon="delete"
+              color="negative"
+              @click="deleteBook(b.id)"
+            >
+              <q-tooltip>Delete Book</q-tooltip>
+            </q-btn>
             <q-btn
               flat
               round
               icon="edit"
-              color="accent"
+              color="positive"
               :to="{name: 'bookedit', params: {id: b.id}}"
             >
               <q-tooltip>Edit Book's Info</q-tooltip>
@@ -136,6 +145,11 @@ export default {
     },
     isLoggedIn () {
       return this.$store.state.auth.token !== null
+    }
+  },
+  methods: {
+    deleteBook (id) {
+      this.$store.dispatch('book/destroy', { id })
     }
   },
   mounted () {

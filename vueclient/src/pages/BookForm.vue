@@ -22,6 +22,7 @@
             <q-select
               class="q-mb-lg"
               filled
+              label="Author"
               v-model="form.author_id"
               :options="authorList"
               option-value="id"

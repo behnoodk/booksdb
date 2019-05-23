@@ -28,7 +28,7 @@ export async function update ({ state, commit, dispatch }, { id, payload }) {
 
 export async function destroy ({ state, commit, dispatch }, { id }) {
   http.defaults.headers.common['Authorization'] = 'Bearer ' + token()
-  const r = await http.delete(`/book/${id}`, id)
+  const r = await http.delete(`api/api/book/${id}`, id)
   if (r.status === 200) {
     dispatch('fetch')
   }
